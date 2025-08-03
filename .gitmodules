@@ -2,9 +2,6 @@
 	path = openvm/openvm-benchmark
 	url = https://github.com/brevis-network/openvm-reth-benchmark.git
 	branch = zkvm-bench
-[submodule "pico/pico"]
-	path = pico/pico
-	url = https://github.com/brevis-network/pico.git
 [submodule "sp1/zkvm-perf"]
 	path = sp1/zkvm-perf
 	url = https://github.com/brevis-network/zkvm-perf.git
