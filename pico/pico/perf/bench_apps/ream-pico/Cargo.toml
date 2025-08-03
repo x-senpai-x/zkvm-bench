@@ -1,0 +1,12 @@
+[package]
+name = "ream-pico"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pico-sdk.workspace = true
+bincode = "1.3.3"
+ream-consensus = { git = "https://github.com/ReamLabs/ream.git", package = "ream-consensus", tag = "v0.0.2" }
+ssz_types = { git = "https://github.com/ReamLabs/ssz_types", branch = "magic-extended-list" }  # Extends 2^29 to 2^40 list root
+ethereum_ssz = "0.8.3"
+ethereum_ssz_derive = "0.8.3"
