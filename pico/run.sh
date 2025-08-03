@@ -15,28 +15,30 @@ export CHUNK_SIZE=2097152
 export CHUNK_BATCH_SIZE=4
 export SPLIT_THRESHOLD=32768
 
-export RUST_LOG=info
+export RUST_LOG=debug
+export RUST_BACKTRACE=full
 export RUSTFLAGS="-C target-cpu=native -C target-feature=+avx512f,+avx512ifma,+avx512vl"
 export JEMALLOC_SYS_WITH_MALLOC_CONF="retain:true,background_thread:true,metadata_thp:always,dirty_decay_ms:-1,muzzy_decay_ms:-1,abort_conf:true"
 export VK_VERIFICATION=true
 
-PROGRAMS=("fibonacci-300kn" "tendermint" "reth-17106222" "reth-20528709")
+PROGRAMS=("ream-pico")
+          
 
 pushd pico
 
 # setup gnark for on-chain proving
-cargo build --release --bin gnarkctl
-cp target/release/gnarkctl gnarkctl
-./gnarkctl setup --field kb
+# cargo build --release --bin gnarkctl
+# cp target/release/gnarkctl gnarkctl
+# ./gnarkctl setup --field kb
 
 for prog in "${PROGRAMS[@]}"; do
   echo "Benchmarking $prog"
-  cargo run --profile perf --bin bench --features jemalloc --features nightly-features -- --programs $prog --field kb >../../logs/pico-$prog.log
+  cargo run --profile perf --bin bench --features jemalloc --features nightly-features -- --programs $prog --field kb --noprove
 done
 
 # release gnark
-./gnarkctl teardown
-rm gnarkctl
+# ./gnarkctl teardown
+# rm gnarkctl
 
 popd
 
